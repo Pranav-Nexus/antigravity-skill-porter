@@ -1,0 +1,4 @@
+{
+  "name": "skill-porter",
+  "description": "Antigravity Skill Porter & Optimizer: Imports, translates, and optimizes agent skills from Claude Code, Cursor, or GitHub repositories into native Antigravity plugins and skills with parallel subagent support."
+}
