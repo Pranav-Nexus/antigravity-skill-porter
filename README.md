@@ -46,7 +46,7 @@ However, running external skills inside Google Antigravity naively creates sever
 - 📦 **Dual Packaging**:
   - Automatically generates `plugin.json` manifests.
   - Installs to both Global Plugins (`~/.gemini/config/plugins/<name>/`) and Global Skills (`~/.gemini/config/skills/<name>/`).
-  - Supports `--workspace` installation for project-specific `.agents/skills/`.
+  - Supports `--workspace` installation to install strictly into the project's `.agents/skills/` (preventing global config pollution).
 - 🔍 **Interactive Diff & Dry-Run Mode**:
   - Run `--dry-run` to inspect a unified diff before any files are written to disk.
 

@@ -374,7 +374,7 @@ def main():
     parser.add_argument("--dest", help="Custom destination directory for installed skills")
     parser.add_argument("--name", help="Override skill name")
     parser.add_argument("--dry-run", action="store_true", help="Preview optimizations and diff without installing")
-    parser.add_argument("--workspace", action="store_true", help="Install into current workspace (.agents/skills/)")
+    parser.add_argument("--workspace", action="store_true", help="Install into current workspace (.agents/skills/) only")
     parser.add_argument("--no-global", action="store_true", help="Do not install into global ~/.gemini/config")
     parser.add_argument("--yes", "-y", action="store_true", help="Skip confirmation prompt for remote source installations")
     args = parser.parse_args()
@@ -387,13 +387,16 @@ def main():
     print(f"[*] Reading source: {source}")
     custom_dest = Path(os.path.expanduser(args.dest)) if args.dest else None
 
+    # When --workspace is specified, install strictly into the workspace (not globally)
+    skip_global = args.no_global or args.workspace
+
     # Check for multi-skill local directory
     if Path(source).is_dir() and (Path(source) / "skills").is_dir():
         port_plugin_repo(
             Path(source),
             dry_run=args.dry_run,
             workspace=args.workspace,
-            no_global=args.no_global,
+            no_global=skip_global,
             custom_dest=custom_dest
         )
         return
@@ -409,7 +412,7 @@ def main():
                     Path(tmpdir),
                     dry_run=args.dry_run,
                     workspace=args.workspace,
-                    no_global=args.no_global,
+                    no_global=skip_global,
                     custom_dest=custom_dest
                 )
                 return
@@ -456,7 +459,7 @@ def main():
         optimized_content=optimized_doc,
         description=desc,
         auxiliary_files=aux_files,
-        global_install=not args.no_global,
+        global_install=not skip_global,
         workspace_install=args.workspace,
         workspace_root=Path.cwd(),
         custom_dest=custom_dest
