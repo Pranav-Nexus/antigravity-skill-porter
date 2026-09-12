@@ -46,7 +46,7 @@ However, running external skills inside Google Antigravity naively creates sever
 - 📦 **Dual Packaging**:
   - Automatically generates `plugin.json` manifests.
   - Installs to both Global Plugins (`~/.gemini/config/plugins/<name>/`) and Global Skills (`~/.gemini/config/skills/<name>/`).
-  - Supports `--workspace` installation for project-specific `.agents/skills/`.
+  - Supports `--workspace` installation to install strictly into the project's `.agents/skills/` (preventing global config pollution).
 - 🔍 **Interactive Diff & Dry-Run Mode**:
   - Run `--dry-run` to inspect a unified diff before any files are written to disk.
 
@@ -76,9 +76,14 @@ python port_skill.py https://github.com/slavingia/skills
 
 You can also use this tool **directly inside Antigravity as a skill**:
 
-1. Copy this folder into `~/.gemini/config/plugins/skill-porter/`
+1. Clone or copy this repository into `~/.gemini/config/plugins/skill-porter/`:
+   ```bash
+   git clone https://github.com/Pranav-Nexus/antigravity-skill-porter.git ~/.gemini/config/plugins/skill-porter
+   ```
 2. In any Antigravity chat, simply ask:
    > *"Import and optimize this skill for Antigravity: https://github.com/owner/repo"*
+
+Because the skill is organized under `skills/skill-porter/SKILL.md`, Antigravity will automatically discover and register it in your sessions.
 
 ---
 
@@ -95,7 +100,7 @@ Included in the [`examples/`](./examples) directory are pre-ported, verified ski
 
 Contributions, issues, and feature requests are welcome!
 - Have a skill you want pre-ported? Open an Issue or submit a PR into `examples/`.
-- Want to add support for new agent platforms? Check out [`references/translation_rules.md`](./references/translation_rules.md).
+- Want to add support for new agent platforms? Check out [`skills/skill-porter/references/translation_rules.md`](./skills/skill-porter/references/translation_rules.md).
 
 If this tool saved you time or improved your Antigravity workflows, **please drop a star ⭐ on GitHub!** It helps other agentic developers discover the project.
 
